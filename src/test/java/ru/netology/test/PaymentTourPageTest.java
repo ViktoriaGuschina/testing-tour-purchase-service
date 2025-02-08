@@ -62,7 +62,7 @@ public class PaymentTourPageTest {
         paymentTourPage.successfulPaymentVisible("Операция одобрена Банком.");
     }
 
-    // забракованая карта // оплата проходит оформить ишью
+    // ишью
     @Test
     @DisplayName("Should get error notification if the card number is declined")
     void ShouldGetErrorNotificationIfTheCardNumberIsDeclined() {
@@ -126,15 +126,14 @@ public class PaymentTourPageTest {
         paymentTourPage.incorrectCardFormatError("Неверный формат");
     }
 
-    // тесты на месяц
-    //оформить ишью// при вставке 00 в месяц и года через 5 лет проходит успешно оплата
+    // ишью
     @Test
     @DisplayName("Should get error notification if month zero passes next year")
     void ShouldGetErrorNotificationIfMonthZeroPassesNextYear() {
         DataHelper.CardInfo cardInfo = new DataHelper.CardInfo(getApprovedCardNumber(), getOnlyZeroInMonthField(), getNextYearInFiveYears(), getGenerateRandomOwner(), getCvc());
         val paymentTourPage = purchaseMetodPage.payByCard();
         paymentTourPage.fillForm(cardInfo);
-        paymentTourPage.incorrectCardFormatError("Неверный формат");
+        paymentTourPage.verifyErrorNotificationVisible("Ошибка! Банк отказал в проведении операции.");
     }
 
     @Test
@@ -264,8 +263,7 @@ public class PaymentTourPageTest {
         paymentTourPage.incorrectCardFormatError("Неверный формат");
     }
 
-    //владелец
-    //оформить ишью - владелец написан на русском и проходит оплата
+    //ишью
     @Test
     @DisplayName("Should get error notification write the owner in Russian")
     void ShouldGetErrorNotificationWriteOwnerInRussian() {
@@ -275,7 +273,7 @@ public class PaymentTourPageTest {
         paymentTourPage.verifyErrorNotificationVisible("Ошибка! Банк отказал в проведении операции.");
     }
 
-    //оформить ишью - написано только имя владельца и оплата все равно проходит
+    //ишью
     @Test
     @DisplayName("Should get error notification write the owner first name")
     void ShouldGetErrorNotificationWriteOwnerFirstName() {
@@ -285,7 +283,7 @@ public class PaymentTourPageTest {
         paymentTourPage.verifyErrorNotificationVisible("Ошибка! Банк отказал в проведении операции.");
     }
 
-    //оформить ишью имя написано с цифрой
+    //ишью
     @Test
     @DisplayName("Should get error notification write the owner with numbers")
     void ShouldGetErrorNotificationWriteOwnerWithNumberse() {
